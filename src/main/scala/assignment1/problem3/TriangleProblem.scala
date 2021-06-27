@@ -1,8 +1,12 @@
 package assignment1.problem3
 
+import base.FileUtils
+
+import java.io.FileNotFoundException
 import scala.annotation.tailrec
 import scala.collection.immutable.ListMap
 import scala.io.Source
+import scala.util.{Failure, Success}
 
 object TriangleProblem extends App {
 
@@ -28,25 +32,32 @@ object TriangleProblem extends App {
   }
 
   def setupData(filename: String): ListMap[Int, Array[Int]] = {
-    val r = Source.fromResource(filename)
-    val il = r.getLines()
+    val r = FileUtils.readTextFile(filename)
+    r match {
+      case Success(reader) => {
+        val il = reader.getLines()
 
-    @tailrec
-    def fillMap(map: ListMap[Int, Array[Int]] = ListMap(), key: Int = 0): ListMap[Int, Array[Int]] = {
-      if(!il.hasNext) map
-      else fillMap(map + (key -> il.next().split(" ").map(x => x.toInt)), key + 1)
+        @tailrec
+        def fillMap(map: ListMap[Int, Array[Int]] = ListMap(), key: Int = 0): ListMap[Int, Array[Int]] = {
+          if (!il.hasNext) map
+          else fillMap(map + (key -> il.next().split(" ").map(x => x.toInt)), key + 1)
+        }
+
+        val map = fillMap()
+        reader.close()
+        map
+      }
+      case Failure(e) =>
+        throw new FileNotFoundException(s"$filename not found : ${e.getMessage}")
     }
 
-    val map = fillMap()
-    r.close()
-    map
   }
 
   def transform(map: ListMap[Int, Array[Int]], vSize: Int, hSize: Int) = {
     val aa: Array[Array[Int]] = Array.ofDim(vSize, hSize)
-    for(i <- 0 to map.size - 1){
+    for (i <- 0 to map.size - 1) {
       val temp = Array.fill(hSize)(0)
-      for(j <- 0 to map.getOrElse(i, Array()).size - 1){
+      for (j <- 0 to map.getOrElse(i, Array()).size - 1) {
         temp(j) = map.getOrElse(i, Array())(j)
       }
       aa.update(i, temp)

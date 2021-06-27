@@ -1,5 +1,7 @@
 package assignment1.problem1
 
+import base.DateUtils
+
 import java.text.ParseException
 import java.time.LocalDate
 import scala.annotation.tailrec
