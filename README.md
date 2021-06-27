@@ -11,10 +11,10 @@
     run GatewaySpecs suite
 ## How to run Suite?
 ##### Run all suite
-    ###### sbt test
+    sbt test
 ##### run individual test suite
-    ###### sbt "testOnly assignment1.problem1.DaysCalculatorSpecs"
-    ###### sbt "testOnly assignment1.problem2.PokerSpecs"
-    ###### sbt "testOnly assignment1.problem3.TriangleProblemSpecs"
-    ###### sbt "testOnly assignment2.GatewaySpecs" 
+    sbt "testOnly assignment1.problem1.DaysCalculatorSpecs"
+    sbt "testOnly assignment1.problem2.PokerSpecs"
+    sbt "testOnly assignment1.problem3.TriangleProblemSpecs"
+    sbt "testOnly assignment2.GatewaySpecs" 
     
